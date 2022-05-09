@@ -61,63 +61,63 @@ CREATE TABLE tag (
 );
 
 
--- create table "user"
--- (
--- 	user_id serial,
--- 	password text,
--- 	registration_date text,
--- 	asked_questions text,
--- 	answers text,
--- 	comments_question text,
--- 	reputation int,
--- 	comments_answer text
--- );
---
--- create unique index user_user_id_uindex
--- 	on "user" (user_id);
+create table users
+(
+	user_id serial,
+	password text,
+	registration_date text,
+	asked_questions text,
+	answers text,
+	comments_question text,
+	reputation int,
+	comments_answer text
+);
 
--- alter table "user"
--- 	add username text;
---
--- create unique index user_username_uindex
--- 	on "user" (username);
+create unique index user_user_id_uindex
+	on users (user_id);
 
--- alter table "user" alter column username set not null;
---
--- alter table "user"
--- 	add constraint user_pk
--- 		primary key (user_id);
+alter table users
+	add username text;
 
--- alter table answer
--- 	add answer_user_id int;
+create unique index user_username_uindex
+	on users (username);
 
--- alter table answer
--- 	add constraint fk_answer_user_id
--- 		foreign key (answer_user_id) references "user";
+alter table users alter column username set not null;
+
+alter table users
+	add constraint user_pk
+		primary key (user_id);
+
+alter table answer
+	add answer_user_id int;
+
+alter table answer
+	add constraint fk_answer_user_id
+		foreign key (answer_user_id) references users;
 
 
--- alter table question
--- 	add question_user_id int;
+alter table question
+	add question_user_id int;
 
--- alter table question
--- 	add constraint fk_question_user_id
--- 		foreign key (question_user_id) references "user";
+alter table question
+	add constraint fk_question_user_id
+		foreign key (question_user_id) references users;
 
--- alter table comment
--- 	add comment_user_id int;
+alter table comment
+	add comment_user_id int;
 
--- alter table comment
--- 	add constraint fk_comment_user_id
--- 		foreign key (comment_user_id) references "user";
+alter table comment
+	add constraint fk_comment_user_id
+		foreign key (comment_user_id) references users;
 
--- alter table answer
--- 	add answer_username text;
---
--- alter table comment
--- 	add comment_username text;
---
--- alter table question
--- 	add question_username text;
+alter table answer
+	add answer_username text;
+
+alter table comment
+	add comment_username text;
+
+alter table question
+	add question_username text;
 
 
 ALTER TABLE ONLY answer
@@ -180,3 +180,5 @@ SELECT pg_catalog.setval('tag_id_seq', 3, true);
 INSERT INTO question_tag VALUES (0, 1);
 INSERT INTO question_tag VALUES (1, 3);
 INSERT INTO question_tag VALUES (2, 3);
+
+
